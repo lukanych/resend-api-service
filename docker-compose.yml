@@ -1,0 +1,11 @@
+services:
+  resend-mailer:
+    build: .
+    container_name: resend_mailer_service
+    ports:
+      - "8089:3000"
+    restart: always
+    environment:
+      - PORT=3000
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - API_SECURE_TOKEN=${API_SECURE_TOKEN}

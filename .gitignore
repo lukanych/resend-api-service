@@ -1,0 +1,11 @@
+.env
+.env.local
+
+node_modules/
+dist/
+build/
+
+*.log
+.docker/
+npm-debug.log*
+.DS_Store

@@ -1,0 +1,19 @@
+{
+  "name": "resend-mailer-service",
+  "version": "1.0.0",
+  "description": "Ultra-lightweight secure Resend API wrapper",
+  "main": "dist/app.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/app.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "resend": "^3.2.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3"
+  }
+}
