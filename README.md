@@ -161,3 +161,10 @@ Developers do not need to rewrite API endpoint parameters to adjust structural e
 ## 🔒 Security Compliance Architecture
 * **Production Protection Check:** The container strictly validates authorization tokens before parsing any JSON payload bodies. If a threat vector leaves headers blank or passes mismatched character arrays, the middleware short-circuits the pipeline instantly, throwing an HTTP `401 Unauthorized` block to preserve Resend monthly pricing tier usage quotas.
 * **Environment Integrity Isolation:** The repository contains a pre-configured `.gitignore` block. File structures prevent tracking local `.env` and `node_modules` paths to keep production data keys from leaking out onto public GitHub staging networks.
+
+
+## 📄 License & Author
+
+Developed and maintained by **Lukanych Vasyl**.
+
+This project is licensed under the terms of the **MIT License**. You are free to modify, distribute, and integrate this wrapper within production systems provided the original copyright notice remains intact.
