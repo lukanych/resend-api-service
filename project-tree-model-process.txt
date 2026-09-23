@@ -8,11 +8,13 @@
 |  +-- [DIR]  templates
 |  |  +-- [SRC]  baseLayout.ts
 |  |  +-- [SRC]  login.ts
-|  |  \-- [SRC]  newsletter.ts
+|  |  +-- [SRC]  newsletter.ts
+|  |  \-- [SRC]  registration.ts
 |  \-- [SRC]  app.ts
 +-- [FILE] .env
 +-- [FILE] .env.example
 +-- [FILE] .gitignore
++-- [CONF] DEVELOPER_INTEGRATION.md
 +-- [DOCKER] docker-compose.yml --> [Infrastructure Orchestrator]  --> [Route: resend-mailer -> standalone]
 |                              --> [Route: resend-mailer -> standalone]
 |     +-- [DOCKER FILE CONTENT -> docker-compose.yml]
@@ -28,6 +30,8 @@
 |     |   |       - PORT=3000                                                          |
 |     |   |       - RESEND_API_KEY=${RESEND_API_KEY}                                   |
 |     |   |       - API_SECURE_TOKEN=${API_SECURE_TOKEN}                               |
+|     |   |       - JWT_SECRET=${JWT_SECRET}                                           |
+|     |   |       - APP_BASE_URL=${APP_BASE_URL}                                       |
 |     |   +----------------------------------------------------------------------------+
 +-- [DOCKER] Dockerfile
 |     +-- [DOCKER FILE CONTENT -> Dockerfile]
