@@ -1,15 +1,28 @@
 <div align="center">
 
+<<<<<<< HEAD
 [![TypeScript](https://shields.io)](https://typescriptlang.org)
 [![Docker](https://shields.io)](https://docker.com)
 [![Node.js](https://shields.io)](https://nodejs.org)
 [![Resend](https://shields.io)](https://resend.com)
 [![License: MIT](https://shields.io)](https://opensource.org)
+=======
+![TypeScript](https://shields.io)
+![Docker](https://shields.io)
+![Node.js](https://shields.io)
+![Resend](https://shields.io)
+![License: MIT](https://shields.io)
+>>>>>>> 015fc7bd1167e065f04eb633e89c72610ee190bb
 
 </div>
 
 <hr />
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 015fc7bd1167e065f04eb633e89c72610ee190bb
 # Secure Resend API Mailer Service (TypeScript + Docker)
 
 An ultra-lightweight, high-performance, and secure microservice wrapper designed to isolate and manage the [Resend API](https://resend.com) inside an independent Docker container. Built strictly using **TypeScript** with native compilation (`tsc`) and type safety.

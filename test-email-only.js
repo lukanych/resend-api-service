@@ -1,7 +1,7 @@
 const readline = require('readline');
 
-// --- Cloud Production Configuration for Vercel ---
-const MAILER_URL = "https://vercel.app";
+// --- Specific Vercel Deployment Link Configuration ---
+const MAILER_URL = "https://resend-api-service-fjxbgsey4-lukanych.vercel.app";
 const API_TOKEN = "c3079ca5b014ec9e1a0793eb2cd1ed975d4aec7b88a07ff166fcef3ac9b19cca";
 
 const rl = readline.createInterface({
@@ -12,9 +12,9 @@ const rl = readline.createInterface({
 function showBanner() {
     console.clear();
     console.log("=========================================================");
-    console.log("   Resend Mailer Microservice - Cloud Template Test Suite ");
+    console.log("   Resend Mailer Microservice - Vercel Preview Test Suite ");
     console.log("=========================================================");
-    console.log(`Target Cloud URL      : \x1b[36m${MAILER_URL}\x1b[0m`);
+    console.log(`Target Preview URL    : \x1b[36m${MAILER_URL}\x1b[0m`);
     console.log("Security Token Loaded : [PROTECTED]");
     console.log("---------------------------------------------------------\n");
 }
@@ -169,9 +169,8 @@ async function executePostRequest(endpoint, payload, email, isRegistration) {
             body: payload
         });
 
-        // Пряма обробка помилок сервера (якщо Vercel поверне 404/500 без JSON-формату)
         if (response.status === 404) {
-            console.log(`\n\x1b[31m[ERROR 404] Маршрут не знайдено. Перевірте, чи задеплоєно файл vercel.json в корінь проекту.\x1b[0m`);
+            console.log(`\n\x1b[31m[ERROR 404] Маршрут не знайдено. Перевірте правильність шляху або конфігурацію vercel.json.\x1b[0m`);
             return askToContinue();
         }
 
