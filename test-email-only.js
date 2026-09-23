@@ -156,42 +156,45 @@ function runWebViewSimulation(type) {
     });
 }
 
-// Helper: Outbound POST pipeline logic
-async function executePostRequest(endpoint, payload, email, isRegistration) {
-    console.log("Processing cloud network packet streams...");
-    try {
-        const response = await fetch(`${MAILER_URL}${endpoint}`, {
-            method: 'POST',
-            headers: {
-                'x-api-token': API_TOKEN,
-                'Content-Type': 'application/json'
-            },
-            body: payload
-        });
+async function executePostRequest(endpoint, payload, email, isRegistration) { 
+ console.log("Processing cloud network packet streams..."); 
+ try { 
+ const response = await fetch(`${MAILER_URL}${endpoint}`, { 
+ method: 'POST', 
+ headers: { 
+ 'x-api-token': API_TOKEN, 
+ 'Content-Type': 'application/json' 
+ },
+ body: payload 
+ }); 
 
-        if (response.status === 404) {
-            console.log(`\n\x1b[31m[ERROR 404] Маршрут не знайдено. Перевірте правильність шляху або конфігурацію vercel.json.\x1b[0m`);
-            return askToContinue();
-        }
+ if (response.status === 404) { 
+ console.log(`\n\x1b[31m[ERROR 404] Маршрут не знайдено. Перевірте правильність шляху або конфігурацію vercel.json.\x1b[0m`); 
+ return askToContinue(); 
+ } 
 
-        const result = await response.json();
+ const result = await response.json(); 
 
-        if (response.ok && result.success) {
-            console.log("\n\x1b[32m[SUCCESS] Vercel Cloud accepted communication state!\x1b[0m");
-            console.log(`Message Envelope ID : ${result.messageId || 'N/A'}`);
-            if (result.message) console.log(`Status Response     : ${result.message}`);
-            
-            if (isRegistration) {
-                console.log(`\n\x1b[36m👉 Action Required: Open your (${email}) inbox, copy the underlying JWT token block from the verification link, and paste it into Menu Option 4.\x1b[0m`);
-            }
-        } else {
-            console.log(`\n\x1b[31m[ERROR] Cloud server rejected request: ${result.error || response.statusText}\x1b[0m`);
-        }
-    } catch (err) {
-        console.log(`\n\x1b[31m[ERROR] Runtime Connection Exception: ${err.message}\x1b[0m`);
-    }
-    askToContinue();
+ if (response.ok && result.success) { 
+ console.log("\n\x1b[32m[SUCCESS] Vercel Cloud accepted communication state!\x1b[0m"); 
+ console.log(`Message Envelope ID : ${result.messageId || 'N/A'}`); 
+ if (result.message) console.log(`Status Response : ${result.message}`); 
+ 
+ if (isRegistration) { 
+ console.log(`\n\x1b[36m👉 Action Required: Open your (${email}) inbox, copy the underlying JWT token block from the verification link, and paste it into Menu Option 4.\x1b[0m`); 
+ } 
+ } else { 
+ // ВИПРАВЛЕНО: тепер замість [object Object] ви побачите деталізовану помилку
+ const rawError = result.error;
+ const errorText = typeof rawError === 'object' ? JSON.stringify(rawError, null, 2) : (rawError || response.statusText);
+ console.log(`\n\x1b[31m[ERROR] Cloud server rejected request:\n${errorText}\x1b[0m`); 
+ } 
+ } catch (err) { 
+ console.log(`\n\x1b[31m[ERROR] Runtime Connection Exception: ${err.message}\x1b[0m`); 
+ } 
+ askToContinue(); 
 }
+
 
 function cancelOperation() {
     console.log("\x1b[31mOperation canceled. Missing mandatory target fields.\x1b[0m");

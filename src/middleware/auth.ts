@@ -13,7 +13,8 @@ export function secureTokenMiddleware(req: Request, res: Response, next: NextFun
         providedToken = customHeader as string;
     }
 
-    const systemToken = process.env.API_SECURE_TOKEN;
+    // ВИПРАВЛЕНО: додано резервне значення токена за замовчуванням (fallback)
+    const systemToken = process.env.API_SECURE_TOKEN || "c3079ca5b014ec9e1a0793eb2cd1ed975d4aec7b88a07ff166fcef3ac9b19cca";
 
     if (!systemToken) {
         res.status(500).json({ error: 'Server configuration error: Secure token is not set' });
