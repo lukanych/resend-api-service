@@ -10,6 +10,14 @@
   ],
   "routes": [
     {
+      "src": "/mailer/(.*)",
+      "dest": "dist/app.js"
+    },
+    {
+      "src": "/api/v1/mailer/(.*)",
+      "dest": "dist/app.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "dist/app.js"
     }
