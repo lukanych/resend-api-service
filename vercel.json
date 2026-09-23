@@ -8,6 +8,9 @@
       "use": "@vercel/node"
     }
   ],
+  "env": {
+    "API_SECURE_TOKEN": "c3079ca5b014ec9e1a0793eb2cd1ed975d4aec7b88a07ff166fcef3ac9b19cca"
+  },
   "routes": [
     {
       "src": "/mailer/(.*)",
