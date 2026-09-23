@@ -1,10 +1,10 @@
 <div align="center">
 
-[![TypeScript](https://shields.io)](https://typescriptlang.org)
-[![Docker](https://shields.io)](https://docker.com)
-[![Node.js](https://shields.io)](https://nodejs.org)
-[![Resend](https://shields.io)](https://resend.com)
-[![License: MIT](https://shields.io)](https://opensource.org)
+  <img src="https://shields.io" alt="TypeScript" />
+  <img src="https://shields.io" alt="Docker" />
+  <img src="https://shields.io" alt="Node.js" />
+  <img src="https://shields.io" alt="Resend API" />
+  <img src="https://shields.io" alt="MIT License" />
 
 </div>
 
