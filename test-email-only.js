@@ -1,7 +1,7 @@
 const readline = require('readline');
 
-// --- Configuration ---
-const MAILER_URL = "http://localhost:8089";
+// --- Cloud Production Configuration for Vercel ---
+const MAILER_URL = "https://vercel.app";
 const API_TOKEN = "c3079ca5b014ec9e1a0793eb2cd1ed975d4aec7b88a07ff166fcef3ac9b19cca";
 
 const rl = readline.createInterface({
@@ -12,10 +12,10 @@ const rl = readline.createInterface({
 function showBanner() {
     console.clear();
     console.log("=========================================================");
-    console.log("   Resend Mailer Microservice - Full Template Test Suite ");
+    console.log("   Resend Mailer Microservice - Cloud Template Test Suite ");
     console.log("=========================================================");
-    console.log(`Target Environment URL : ${MAILER_URL}`);
-    console.log("Security Token Loaded  : [PROTECTED]");
+    console.log(`Target Cloud URL      : \x1b[36m${MAILER_URL}\x1b[0m`);
+    console.log("Security Token Loaded : [PROTECTED]");
     console.log("---------------------------------------------------------\n");
 }
 
@@ -53,7 +53,7 @@ function handleMenuChoice(choice) {
 
 // Handler for LOGIN and NEWSLETTER
 function runStandardEmail(templateType) {
-    console.log(`\n--- Sending [${templateType}] Template Email ---`);
+    console.log(`\n--- Sending [${templateType}] Template Email via Vercel ---`);
     rl.question("Enter recipient email address: ", (email) => {
         if (!email.trim()) return cancelOperation();
 
@@ -62,7 +62,7 @@ function runStandardEmail(templateType) {
         if (templateType === 'LOGIN') {
             templateData.link = "https://your-main-app.com";
         } else if (templateType === 'NEWSLETTER') {
-            templateData.content = "Welcome to our monthly upgrades! We have deployed new secure API channels.";
+            templateData.content = "Welcome to our monthly upgrades! We have deployed new secure API channels on Vercel.";
         }
 
         const payload = JSON.stringify({
@@ -77,7 +77,7 @@ function runStandardEmail(templateType) {
 
 // Handler for REGISTRATION (JWT Creation)
 function runRegistrationMode() {
-    console.log("\n--- [REGISTRATION FLOW]: Generating Cryptographic JWT & Link ---");
+    console.log("\n--- [REGISTRATION FLOW]: Generating Cryptographic JWT via Vercel ---");
     rl.question("Enter destination tester email address: ", (email) => {
         if (!email.trim()) return cancelOperation();
 
@@ -99,14 +99,14 @@ function runRegistrationMode() {
 
 // Handler for VERIFICATION (JWT Decoding)
 function runVerificationMode() {
-    console.log("\n--- [VERIFICATION FLOW]: Cryptographic Signature Diagnostic ---");
+    console.log("\n--- [VERIFICATION FLOW]: Cryptographic Diagnostic via Vercel ---");
     rl.question("Paste the raw token block string (characters after ?token=): ", async (token) => {
         if (!token.trim()) {
             console.log("\x1b[31mOperation aborted. Token input string cannot be blank.\x1b[0m");
             return askToContinue();
         }
 
-        console.log("Transmitting packet verification frames...");
+        console.log("Transmitting packet verification frames to cloud...");
         try {
             const response = await fetch(`${MAILER_URL}/api/v1/mailer/verify?token=${token.trim()}`);
             const result = await response.json();
@@ -125,7 +125,7 @@ function runVerificationMode() {
                 console.log(`\n\x1b[31m[ERROR] Verification Rejected: ${result.error || response.statusText}\x1b[0m`);
             }
         } catch (err) {
-            console.log(`\n\x1b[31m[ERROR] Runtime Exception: ${err.message}\x1b[0m`);
+            console.log(`\n\x1b[31m[ERROR] Cloud Runtime Exception: ${err.message}\x1b[0m`);
         }
         askToContinue();
     });
@@ -138,19 +138,19 @@ function runWebViewSimulation(type) {
         if (!email.trim()) return cancelOperation();
 
         const targetUrl = `${MAILER_URL}/mailer/${type}?email=${encodeURIComponent(email.trim())}`;
-        console.log(`\nProcessing request frame against public router routing engine...`);
+        console.log(`\nProcessing request frame against Vercel routing engine...`);
         console.log(`Constructed Web Target: \x1b[34m${targetUrl}\x1b[0m`);
         
         try {
             const response = await fetch(targetUrl);
             if (response.ok) {
                 console.log(`\n\x1b[32m[SUCCESS] Public view routed successfully! (HTTP Status: ${response.status})\x1b[0m`);
-                console.log(`The microservice successfully processed the client-side opt-out interface.`);
+                console.log(`The cloud microservice successfully processed the client-side interface.`);
             } else {
-                console.log(`\n\x1b[31m[ERROR] Public route returned status: ${response.status}\x1b[0m`);
+                console.log(`\n\x1b[31m[ERROR] Vercel route returned status: ${response.status}\x1b[0m`);
             }
         } catch (err) {
-            console.log(`\n\x1b[31m[ERROR] Network Connection Failure: ${err.message}\x1b[0m`);
+            console.log(`\n\x1b[31m[ERROR] Network Connection Failure to Vercel: ${err.message}\x1b[0m`);
         }
         askToContinue();
     });
@@ -158,7 +158,7 @@ function runWebViewSimulation(type) {
 
 // Helper: Outbound POST pipeline logic
 async function executePostRequest(endpoint, payload, email, isRegistration) {
-    console.log("Processing network packet streams...");
+    console.log("Processing cloud network packet streams...");
     try {
         const response = await fetch(`${MAILER_URL}${endpoint}`, {
             method: 'POST',
@@ -169,10 +169,16 @@ async function executePostRequest(endpoint, payload, email, isRegistration) {
             body: payload
         });
 
+        // Пряма обробка помилок сервера (якщо Vercel поверне 404/500 без JSON-формату)
+        if (response.status === 404) {
+            console.log(`\n\x1b[31m[ERROR 404] Маршрут не знайдено. Перевірте, чи задеплоєно файл vercel.json в корінь проекту.\x1b[0m`);
+            return askToContinue();
+        }
+
         const result = await response.json();
 
         if (response.ok && result.success) {
-            console.log("\n\x1b[32m[SUCCESS] Microservice accepted communication state!\x1b[0m");
+            console.log("\n\x1b[32m[SUCCESS] Vercel Cloud accepted communication state!\x1b[0m");
             console.log(`Message Envelope ID : ${result.messageId || 'N/A'}`);
             if (result.message) console.log(`Status Response     : ${result.message}`);
             
@@ -180,10 +186,10 @@ async function executePostRequest(endpoint, payload, email, isRegistration) {
                 console.log(`\n\x1b[36m👉 Action Required: Open your (${email}) inbox, copy the underlying JWT token block from the verification link, and paste it into Menu Option 4.\x1b[0m`);
             }
         } else {
-            console.log(`\n\x1b[31m[ERROR] Server rejected request: ${result.error || response.statusText}\x1b[0m`);
+            console.log(`\n\x1b[31m[ERROR] Cloud server rejected request: ${result.error || response.statusText}\x1b[0m`);
         }
     } catch (err) {
-        console.log(`\n\x1b[31m[ERROR] Runtime Exception: ${err.message}\x1b[0m`);
+        console.log(`\n\x1b[31m[ERROR] Runtime Connection Exception: ${err.message}\x1b[0m`);
     }
     askToContinue();
 }

@@ -1,3 +1,15 @@
+<div align="center">
+
+[![TypeScript](https://shields.io)](https://typescriptlang.org)
+[![Docker](https://shields.io)](https://docker.com)
+[![Node.js](https://shields.io)](https://nodejs.org)
+[![Resend](https://shields.io)](https://resend.com)
+[![License: MIT](https://shields.io)](https://opensource.org)
+
+</div>
+
+<hr />
+
 # Secure Resend API Mailer Service (TypeScript + Docker)
 
 An ultra-lightweight, high-performance, and secure microservice wrapper designed to isolate and manage the [Resend API](https://resend.com) inside an independent Docker container. Built strictly using **TypeScript** with native compilation (`tsc`) and type safety.
@@ -129,6 +141,31 @@ Developers do not need to rewrite API endpoint parameters to adjust structural e
 ## 🛡️ Security Compliance Architecture
 * **Production Protection Check:** The container strictly validates authorization tokens before parsing any JSON payload bodies. If a threat vector leaves headers blank or passes mismatched character arrays, the middleware short-circuits the pipeline instantly, throwing an HTTP `401 Unauthorized` block to preserve Resend monthly pricing tier usage quotas.
 * **Environment Integrity Isolation:** The repository contains a pre-configured `.gitignore` block. File structures prevent tracking local `.env` and `node_modules` paths to keep production data keys from leaking out onto public GitHub staging networks.
+
+## 🗺️ Project Roadmap & Future Scope
+
+We are actively working on expanding this microservice into a unified, lightweight communications hub. Below are the key milestones planned for future releases. Open Source contributors are highly encouraged to pick up any of these items!
+
+### 🟩 Phase 1: Core Enhancements (Short-Term)
+* [ ] **Automatic Success Webhook Callbacks:** Add a notification layer that fires an HTTP POST webhook back to your main application server once Resend successfully delivers or drops an email.
+* [ ] **Custom JWT Expiration Overrides:** Allow the primary backend to dynamically specify custom token lifespans (e.g., `expiresIn: '1h'` or `7d`) inside the `/register` payload body.
+
+### 🟨 Phase 2: Template & Localization Management (Medium-Term)
+* [ ] **Dynamic Language Localization (i18n):** Introduce an automatic language toggle inside the template engine (e.g., `templateData: { lang: 'uk' }`) to change static email text frameworks seamlessly.
+* [ ] **Password Reset Layout Integration:** Add a native `src/templates/passwordReset.ts` module with pre-configured transaction layout parameters.
+
+### 🟦 Phase 3: Channel Expansion (Long-Term)
+* [ ] **Multi-Channel SMS Templates:** Integrate lightweight fallback endpoints for SMS dispatch systems using popular secure APIs (like Twilio or Infobip).
+* [ ] **Developer Web Dashboard:** Mount an optional public-facing web view route container dashboard showing real-time delivery performance charts using pure Tailwind CSS.
+
+---
+
+### 🤝 How to Contribute
+If you want to implement any of the roadmap features above:
+1. Open an **Issue** to discuss your architectural approach.
+2. Fork the repository and build your feature layer.
+3. Submit a **Pull Request (PR)** tracking back to the `main` branch. 
+
 
 ## 📝 License & Author
 Developed and maintained by **Lukanych Vasyl**.  
