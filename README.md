@@ -11,6 +11,7 @@
 <hr />
 
 
+
 # Secure Resend API Mailer Service (TypeScript + Docker)
 
 An ultra-lightweight, high-performance, and secure microservice wrapper designed to isolate and manage the [Resend API](https://resend.com) inside an independent Docker container. Built strictly using **TypeScript** with native compilation (`tsc`) and type safety.
