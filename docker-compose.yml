@@ -9,3 +9,5 @@ services:
       - PORT=3000
       - RESEND_API_KEY=${RESEND_API_KEY}
       - API_SECURE_TOKEN=${API_SECURE_TOKEN}
+      - JWT_SECRET=${JWT_SECRET}
+      - APP_BASE_URL=${APP_BASE_URL}

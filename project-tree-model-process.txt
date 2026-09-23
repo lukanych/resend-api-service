@@ -1,0 +1,57 @@
+﻿resend-api-service
++-- [DIR]  src
+|  +-- [DIR]  middleware
+|  |  \-- [SRC]  auth.ts
+|  +-- [DIR]  routes
+|  |  +-- [SRC]  email.ts
+|  |  \-- [SRC]  views.ts
+|  +-- [DIR]  templates
+|  |  +-- [SRC]  baseLayout.ts
+|  |  +-- [SRC]  login.ts
+|  |  \-- [SRC]  newsletter.ts
+|  \-- [SRC]  app.ts
++-- [FILE] .env
++-- [FILE] .env.example
++-- [FILE] .gitignore
++-- [DOCKER] docker-compose.yml --> [Infrastructure Orchestrator]  --> [Route: resend-mailer -> standalone]
+|                              --> [Route: resend-mailer -> standalone]
+|     +-- [DOCKER FILE CONTENT -> docker-compose.yml]
+|     |   +----------------------------------------------------------------------------+
+|     |   | services:                                                                  |
+|     |   |   resend-mailer:                                                           |
+|     |   |     build: .                                                               |
+|     |   |     container_name: resend_mailer_service                                  |
+|     |   |     ports:                                                                 |
+|     |   |       - "8089:3000"                                                        |
+|     |   |     restart: always                                                        |
+|     |   |     environment:                                                           |
+|     |   |       - PORT=3000                                                          |
+|     |   |       - RESEND_API_KEY=${RESEND_API_KEY}                                   |
+|     |   |       - API_SECURE_TOKEN=${API_SECURE_TOKEN}                               |
+|     |   +----------------------------------------------------------------------------+
++-- [DOCKER] Dockerfile
+|     +-- [DOCKER FILE CONTENT -> Dockerfile]
+|     |   +----------------------------------------------------------------------------+
+|     |   | FROM node:20-alpine AS builder                                             |
+|     |   | WORKDIR /usr/src/app                                                       |
+|     |   | COPY package*.json ./                                                      |
+|     |   | RUN npm install                                                            |
+|     |   | COPY . .                                                                   |
+|     |   | RUN npm run build                                                          |
+|     |   |                                                                            |
+|     |   | FROM node:20-alpine                                                        |
+|     |   | WORKDIR /usr/src/app                                                       |
+|     |   | COPY package*.json ./                                                      |
+|     |   | RUN npm install --omit=dev                                                 |
+|     |   | COPY --from=builder /usr/src/app/dist ./dist                               |
+|     |   |                                                                            |
+|     |   | EXPOSE 3000                                                                |
+|     |   | CMD ["node", "dist/app.js"]                                                |
+|     |   +----------------------------------------------------------------------------+
++-- [FILE] generate-map.ps1
++-- [FILE] LICENSE
++-- [PKG]  package-lock.json
++-- [PKG]  package.json
++-- [CONF] project-tree-model-process.txt
++-- [CONF] README.md
+\-- [CONF] tsconfig.json
